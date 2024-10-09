@@ -185,7 +185,6 @@ type MsgGateway struct {
 		WebsocketMaxMsgLen  int   `mapstructure:"websocketMaxMsgLen"`
 		WebsocketTimeout    int   `mapstructure:"websocketTimeout"`
 	} `mapstructure:"longConnSvr"`
-	MultiLoginPolicy int `mapstructure:"multiLoginPolicy"`
 }
 
 type MsgTransfer struct {
@@ -346,21 +345,26 @@ type Redis struct {
 }
 
 type BeforeConfig struct {
-	Enable         bool `mapstructure:"enable"`
-	Timeout        int  `mapstructure:"timeout"`
-	FailedContinue bool `mapstructure:"failedContinue"`
+	Enable         bool     `mapstructure:"enable"`
+	Timeout        int      `mapstructure:"timeout"`
+	FailedContinue bool     `mapstructure:"failedContinue"`
+	AllowedTypes   []string `mapstructure:"allowedTypes"`
+	DeniedTypes    []string `mapstructure:"deniedTypes"`
 }
 
 type AfterConfig struct {
 	Enable       bool     `mapstructure:"enable"`
 	Timeout      int      `mapstructure:"timeout"`
 	AttentionIds []string `mapstructure:"attentionIds"`
+	AllowedTypes []string `mapstructure:"allowedTypes"`
+	DeniedTypes  []string `mapstructure:"deniedTypes"`
 }
 
 type Share struct {
-	Secret          string          `mapstructure:"secret"`
-	RpcRegisterName RpcRegisterName `mapstructure:"rpcRegisterName"`
-	IMAdminUserID   []string        `mapstructure:"imAdminUserID"`
+	Secret           string          `mapstructure:"secret"`
+	RpcRegisterName  RpcRegisterName `mapstructure:"rpcRegisterName"`
+	IMAdminUserID    []string        `mapstructure:"imAdminUserID"`
+	MultiLoginPolicy int             `mapstructure:"multiLoginPolicy"`
 }
 type RpcRegisterName struct {
 	User           string `mapstructure:"user"`
@@ -434,6 +438,7 @@ type Webhooks struct {
 	BeforeAddBlack           BeforeConfig `mapstructure:"beforeAddBlack"`
 	AfterAddFriend           AfterConfig  `mapstructure:"afterAddFriend"`
 	BeforeAddFriendAgree     BeforeConfig `mapstructure:"beforeAddFriendAgree"`
+	AfterAddFriendAgree      AfterConfig  `mapstructure:"afterAddFriendAgree"`
 	AfterDeleteFriend        AfterConfig  `mapstructure:"afterDeleteFriend"`
 	BeforeImportFriends      BeforeConfig `mapstructure:"beforeImportFriends"`
 	AfterImportFriends       AfterConfig  `mapstructure:"afterImportFriends"`
